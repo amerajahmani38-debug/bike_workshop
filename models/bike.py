@@ -12,23 +12,8 @@ class BikeWorkshopBike(models.Model):
         ('city', 'City'),
         ('electric', 'Electric')
     ], string='Bike Type', default='city')
+
     purchase_date = fields.Date(string='Purchase Date')
     last_maintenance_date = fields.Date(string='Last Maintenance Date')
     daily_rental_price = fields.Float(string='Daily Rental Price', required=True)
     wheel_size = fields.Float(string='Wheel Size (inches)')
-    
-    
-    bike_code = fields.Char(string='Bike Code', copy=False,  default='New')
-
-    _sql_constraints = [
-        ('check_daily_rental_price_positive', 'CHECK(daily_rental_price >= 0)', 'The daily rental price must be strictly positive.'),
-        ('unique_name', 'UNIQUE(name)', 'The bike name must be unique!')
-    ]
-
-    def action_make_available(self):
-        for record in self:
-            record.state = 'available'
-
-    def action_make_rented(self):
-        for record in self:
-            record.state = 'rented'
