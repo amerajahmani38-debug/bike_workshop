@@ -63,9 +63,4 @@
               action="action_bike_workshop" 
               sequence="10"/>
 
-    
-     <record id="group_bike_workshop_user" model="res.groups">
-     <field name="name">Workshop Staff</field>
-     <field name="category_id" ref="base.module_category_services"/>
-     </record>
 </odoo>
