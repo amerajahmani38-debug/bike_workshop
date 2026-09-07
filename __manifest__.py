@@ -5,9 +5,10 @@
     'summary': 'Manage bikes and daily rental operations for Ramis workshop',
     'depends': ['base'],
     'data': [
-        'security/ir.model.access.csv',
-        'views/bike_views.xml',  
-    ],
+    'security/bike_workshop_security.xml',
+    'security/ir.model.access.csv',
+    'views/bike_views.xml',  
+     ],
     'installable': True,
     'application': True,
     'auto_install': False,
