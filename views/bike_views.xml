@@ -54,8 +54,9 @@
     </record>
 
     <!-- Menus -->
-    <menuitem id="menu_bike_workshop_root" 
-              name="Bike Workshop"/>
+    <menuitem id="menu_bike_workshop_root"
+              name="Bike Workshop"
+              groups="bike_workshop.group_bike_workshop_user"/>
 
     <menuitem id="menu_bike_management" 
               name="Bikes" 
