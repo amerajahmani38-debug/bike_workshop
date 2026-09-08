@@ -2,9 +2,9 @@
 <odoo>
     <data noupdate="1">
         <!-- تعريف مجموعة Workshop Staff مباشرة -->
-            <record id="group_bike_workshop_user" model="res.groups">
+        <record id="group_bike_workshop_user" model="res.groups">
             <field name="name">Workshop Staff</field>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_system'))]"/>
         </record>
     </data>
 </odoo>
