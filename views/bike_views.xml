@@ -54,14 +54,16 @@
     </record>
 
     <!-- Menus -->
-    <menuitem id="menu_bike_workshop_root"
-              name="Bike Workshop"
-              groups="bike_workshop.group_bike_workshop_user"/>
 
+   <menuitem id="menu_bike_workshop_root"
+             name="Bike Workshop"
+             groups="bike_workshop.group_bike_workshop_user,base.group_system"/>
+    
     <menuitem id="menu_bike_management" 
               name="Bikes" 
               parent="menu_bike_workshop_root" 
               action="action_bike_workshop" 
               sequence="10"/>
 
+    
 </odoo>
