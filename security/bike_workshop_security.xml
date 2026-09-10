@@ -5,6 +5,7 @@
         <record id="group_bike_workshop_user" model="res.groups">
             <field name="name">Workshop Staff</field>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
         </record>
     </data>
 </odoo>
