@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- 1. Define the Workshop Staff access group -->
     <data noupdate="1">
-        <!-- Workshop Staff Group -->
         <record id="group_bike_workshop_user" model="res.groups">
             <field name="name">Workshop Staff</field>
             <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
-            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        </record>
+    </data>
+
+    <!-- 2. Assign the Administrator user from the res.users side (The Required Fix) -->
+    <data noupdate="0">
+        <record id="base.user_admin" model="res.users">
+            <field name="groups_id" eval="[(4, ref('group_bike_workshop_user'))]"/>
         </record>
     </data>
 </odoo>
