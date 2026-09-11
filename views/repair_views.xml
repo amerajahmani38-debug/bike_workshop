@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Repair Search View -->
+    <record id="view_bike_repair_search" model="ir.ui.view">
+        <field name="name">bike.repair.search</field>
+        <field name="model">bike.repair</field>
+        <field name="arch" type="xml">
+            <search string="Search Repairs">
+                <!-- حقول البحث المنسدلة المتقدمة -->
+                <field name="name" string="Repair Reference"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="bike_source" string="Bike Source"/>
+                <field name="workshop_bike_id" string="Workshop Bike"/>
+                <field name="mechanic_id" string="Assigned Mechanic"/>
+                <field name="state" string="Status"/>
+                
+                <!-- فلاتر جاهزة لتصفية الحالات -->
+                <separator/>
+                <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="In Progress" name="filter_in_progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter string="Completed" name="filter_completed" domain="[('state', '=', 'completed')]"/>
+                <filter string="Cancelled" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Repair Form View -->
+    <record id="view_bike_repair_form" model="ir.ui.view">
+        <field name="name">bike.repair.form</field>
+        <field name="model">bike.repair</field>
+        <field name="arch" type="xml">
+            <form string="Repair Job">
+                <header>
+                    <button name="action_start" string="Start Repair" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_complete" string="Complete" type="object" class="oe_highlight" invisible="state != 'in_progress'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state not in ('draft', 'in_progress')"/>
+                    <button name="action_draft" string="Set to Draft" type="object" invisible="state not in ('cancelled',)"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id" options="{'no_create': True}"/>
+                            <field name="bike_source" widget="radio"/>
+                            <field name="workshop_bike_id" invisible="bike_source != 'workshop'" required="bike_source == 'workshop'"/>
+                            <field name="external_bike_name" invisible="bike_source != 'external'" required="bike_source == 'external'"/>
+                            <field name="external_bike_brand" invisible="bike_source != 'external'"/>
+                            <field name="external_bike_type" invisible="bike_source != 'external'"/>
+                        </group>
+                        <group>
+                            <field name="mechanic_id"/>
+                            <field name="service_date"/>
+                            <field name="company_currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="reported_issue"/>
+                        <field name="service_notes"/>
+                    </group>
+                    <notebook>
+                        <page string="Spare Parts">
+                            <field name="repair_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id" options="{'quick_create': False}"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="subtotal"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_parts_cost" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Repair List View -->
+    <record id="view_bike_repair_tree" model="ir.ui.view">
+        <field name="name">bike.repair.tree</field>
+        <field name="model">bike.repair</field>
+        <field name="arch" type="xml">
+            <list string="Repair Jobs">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="bike_source"/>
+                <field name="mechanic_id"/>
+                <field name="service_date"/>
+                <field name="total_parts_cost"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'" decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_bike_repair" model="ir.actions.act_window">
+        <field name="name">Repair Jobs</field>
+        <field name="res_model">bike.repair</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_bike_repair_root" 
+              name="Repairs" 
+              parent="menu_bike_workshop_root" 
+              action="action_bike_repair" 
+              sequence="30"/>
+</odoo>

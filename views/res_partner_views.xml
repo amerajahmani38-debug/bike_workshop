@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_inherit_bike" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.bike</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- إضافة الحقل بجانب الفئة أو في مكان مناسب داخل صفحة العميل -->
+            <field name="category_id" position="after">
+                <field name="preferred_bike_type"/>
+            </field>
+        </field>
+    </record>
+</odoo>
