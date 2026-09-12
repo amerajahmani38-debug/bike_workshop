@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="view_bike_form" model="ir.ui.view">
+        <field name="name">bike.workshop.bike.form</field>
+        <field name="model">bike.workshop.bike</field>
+        <field name="arch" type="xml">
+            <form string="Bike">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. Mountain Bike 01"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="brand"/>
+                            <field name="bike_type"/>
+                            <field name="wheel_size"/>
+                            <field name="purchase_date"/>
+                        </group>
+                        <group>
+                            <field name="daily_rental_price"/>
+                            <field name="last_maintenance_date"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List View -->
+    <record id="view_bike_tree" model="ir.ui.view">
+        <field name="name">bike.workshop.bike.tree</field>
+        <field name="model">bike.workshop.bike</field>
+        <field name="arch" type="xml">
+            <list string="Bikes">
+                <field name="name"/>
+                <field name="brand"/>
+                <field name="bike_type"/>
+                <field name="daily_rental_price"/>
+                <field name="purchase_date"/>
+                <field name="last_maintenance_date"/>
+                <field name="wheel_size"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_bike_workshop" model="ir.actions.act_window">
+        <field name="name">Bikes</field>
+        <field name="res_model">bike.workshop.bike</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menus -->
+
+   <menuitem id="menu_bike_workshop_root"
+             name="Bike Workshop"
+             groups="bike_workshop.group_bike_workshop_user,base.group_system"/>
+    
+    <menuitem id="menu_bike_management" 
+              name="Bikes" 
+              parent="menu_bike_workshop_root" 
+              action="action_bike_workshop" 
+              sequence="10"/>
+
+    
+</odoo>
