@@ -6,7 +6,6 @@
         <field name="model">bike.repair</field>
         <field name="arch" type="xml">
             <search string="Search Repairs">
-                <!-- حقول البحث المنسدلة المتقدمة -->
                 <field name="name" string="Repair Reference"/>
                 <field name="customer_id" string="Customer"/>
                 <field name="bike_source" string="Bike Source"/>
@@ -14,7 +13,6 @@
                 <field name="mechanic_id" string="Assigned Mechanic"/>
                 <field name="state" string="Status"/>
                 
-                <!-- فلاتر جاهزة لتصفية الحالات -->
                 <separator/>
                 <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
                 <filter string="In Progress" name="filter_in_progress" domain="[('state', '=', 'in_progress')]"/>
@@ -34,7 +32,6 @@
                     <button name="action_start" string="Start Repair" type="object" class="oe_highlight" invisible="state != 'draft'"/>
                     <button name="action_complete" string="Complete" type="object" class="oe_highlight" invisible="state != 'in_progress'"/>
                     <button name="action_cancel" string="Cancel" type="object" invisible="state not in ('draft', 'in_progress')"/>
-                    <button name="action_draft" string="Set to Draft" type="object" invisible="state not in ('cancelled',)"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,completed"/>
                 </header>
                 <sheet>
@@ -54,7 +51,7 @@
                         </group>
                         <group>
                             <field name="mechanic_id"/>
-                            <field name="service_date"/>
+                            <field name="last_service_date"/>
                             <field name="company_currency_id" invisible="1"/>
                         </group>
                     </group>
@@ -93,7 +90,7 @@
                 <field name="customer_id"/>
                 <field name="bike_source"/>
                 <field name="mechanic_id"/>
-                <field name="service_date"/>
+                <field name="last_service_date"/>
                 <field name="total_parts_cost"/>
                 <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'" decoration-danger="state == 'cancelled'"/>
             </list>
@@ -109,8 +106,25 @@
 
     <!-- Menus -->
     <menuitem id="menu_bike_repair_root" 
-              name="Repairs" 
-              parent="menu_bike_workshop_root" 
+          name="Repairs" 
+          parent="menu_bike_workshop_root" 
+          sequence="30"/>
+
+    <menuitem id="menu_bike_repair_all" 
+              name="All Repairs" 
+              parent="menu_bike_repair_root" 
               action="action_bike_repair" 
-              sequence="30"/>
+              sequence="10"/>
+
+    <!-- Product Template Form View Inheritance for Spare Parts -->
+    <record id="product_template_form_view_inherit_bike_repair" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.bike.repair</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='type']" position="after">
+                <field name="is_spare_part" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

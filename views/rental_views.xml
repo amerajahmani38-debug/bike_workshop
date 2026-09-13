@@ -9,6 +9,7 @@
                 <header>
                     <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != 'draft'"/>
                     <button name="action_return" string="Return" type="object" class="oe_highlight" invisible="state != 'confirmed'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state in ('returned', 'cancelled')"/>
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,returned"/>
                 </header>
                 <sheet>
@@ -19,7 +20,8 @@
                     </div>
                     <group>
                         <group>
-                           <field name="customer_id" options="{'no_create': False, 'no_create_edit': False}"/>                            <field name="bike_id"/>
+                            <field name="customer_id" options="{'no_create': False, 'no_create_edit': False}"/>
+                            <field name="bike_id"/>
                             <field name="daily_rental_price"/>
                         </group>
                         <group>
@@ -48,7 +50,7 @@
                 <field name="expected_return_date"/>
                 <field name="rental_duration"/>
                 <field name="total_amount"/>
-                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirmed'" decoration-success="state == 'returned'"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'confirmed'" decoration-success="state == 'returned'" decoration-danger="state == 'cancelled'"/>
             </list>
         </field>
     </record>
@@ -71,7 +73,6 @@
     <menuitem id="menu_bike_rental_root" 
               name="Rentals" 
               parent="menu_bike_workshop_root" 
-              action="action_bike_rental_all" 
               sequence="20"/>
 
     <menuitem id="menu_bike_rental_all" 

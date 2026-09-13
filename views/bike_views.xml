@@ -63,12 +63,11 @@
     <!-- Menus -->
     <menuitem id="menu_bike_workshop_root"
               name="Bike Workshop"
-              groups="bike_workshop_task.group_bike_workshop_user,base.group_system"/>
+              sequence="10"/>
     
     <menuitem id="menu_bike_management" 
               name="Bikes" 
               parent="menu_bike_workshop_root" 
               action="action_bike_workshop" 
               sequence="10"/>
-
 </odoo>

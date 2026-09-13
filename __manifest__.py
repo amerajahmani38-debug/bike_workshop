@@ -6,6 +6,7 @@
     'depends': ['base', 'mail', 'product'],    
     'data': [
         'security/bike_workshop_security.xml',
+        'views/product_views.xml',
         'security/ir.model.access.csv',
         'data/rental_sequence.xml',
         'data/repair_sequence.xml',

@@ -8,10 +8,10 @@
         </record>
     </data>
 
-    <!-- 2. Assign the Administrator user from the res.users side (The Required Fix) -->
+    <!-- 2. Assign the Administrator user from the res.users side (The Required Fix for Odoo 19) -->
     <data noupdate="0">
         <record id="base.user_admin" model="res.users">
-            <field name="groups_id" eval="[(4, ref('group_bike_workshop_user'))]"/>
+            <field name="group_ids" eval="[(4, ref('group_bike_workshop_user'))]"/>
         </record>
     </data>
 </odoo>

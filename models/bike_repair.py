@@ -5,7 +5,8 @@ from datetime import date
 class BikeRepair(models.Model):
     _name = 'bike.repair'
     _description = 'Bike Repair Job'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    # توريث المكسن المشترك بجانب ميزات البريد والتتبع
+    _inherit = ['bike.service.mixin', 'mail.thread', 'mail.activity.mixin']
     _order = 'id desc'
 
     name = fields.Char(string='Repair Reference', required=True, copy=False, readonly=True, default=lambda self: 'New')
@@ -28,12 +29,9 @@ class BikeRepair(models.Model):
         ('electric', 'Electric Bike')
     ], string='Bike Type')
 
-    # Shared / Service Details
+    # Shared / Service Details (تأتي من bike.service.mixin مثل mechanic_id, service_notes, last_service_date)
     reported_issue = fields.Text(string='Reported Issue', required=True, tracking=True)
-    mechanic_id = fields.Many2one('res.users', string='Assigned Mechanic', required=True, tracking=True)
-    service_date = fields.Date(string='Service Date', default=fields.Date.today, tracking=True)
-    service_notes = fields.Text(string='Service Notes', tracking=True)
-
+    
     # Spare Parts Lines & Costs
     repair_line_ids = fields.One2many('bike.repair.line', 'repair_id', string='Spare Parts Lines')
     total_parts_cost = fields.Monetary(string='Total Spare Parts Cost', compute='_compute_total_parts_cost', store=True, currency_field='company_currency_id')
@@ -59,7 +57,7 @@ class BikeRepair(models.Model):
         for repair in self:
             repair.total_parts_cost = sum(line.subtotal for line in repair.repair_line_ids)
 
-    # Lifecycle Action Methods & Validations
+    # Lifecycle Action Methods & Validations (بدون أي إمكانية لإعادة الفتح)
     def action_start(self):
         for repair in self:
             if not repair.customer_id or not repair.reported_issue or not repair.mechanic_id:
@@ -72,7 +70,7 @@ class BikeRepair(models.Model):
 
     def action_complete(self):
         for repair in self:
-            if not repair.service_notes or not repair.service_date:
+            if not repair.service_notes or not repair.last_service_date:
                 raise UserError("Cannot complete the repair without Service Notes and Service Date.")
             repair.state = 'completed'
 
@@ -82,19 +80,20 @@ class BikeRepair(models.Model):
                 raise UserError("Completed repairs cannot be cancelled.")
             repair.state = 'cancelled'
 
-    def action_draft(self):
-        for repair in self:
-            if repair.state in ['completed', 'cancelled']:
-                raise UserError("Processed repairs cannot be moved back to draft.")
-            repair.state = 'draft'
-
 
 class BikeRepairLine(models.Model):
     _name = 'bike.repair.line'
     _description = 'Bike Repair Spare Part Line'
 
     repair_id = fields.Many2one('bike.repair', string='Repair Reference', required=True, ondelete='cascade')
-    product_id = fields.Many2one('product.product', string='Spare Part Product', required=True)
+    
+    product_id = fields.Many2one(
+        'product.product', 
+        string='Spare Part Product', 
+        required=True, 
+        domain="[('is_spare_part', '=', True)]"
+    )
+    
     name = fields.Char(string='Description', related='product_id.name', readonly=True)
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
     
@@ -111,6 +110,16 @@ class BikeRepairLine(models.Model):
     @api.depends('quantity', 'unit_price')
     def _compute_subtotal(self):
         for line in self:
+            line.subtotal = line.quantity * line.unit_price
+
+    @api.constrains('quantity', 'unit_price')
+    def _check_quantity_unit_price(self):
+        for line in self:
             if line.quantity < 0 or line.unit_price < 0:
                 raise ValidationError("Quantity and unit price cannot be negative.")
-            line.subtotal = line.quantity * line.unit_price
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    is_spare_part = fields.Boolean(string='Is Spare Part', default=False, tracking=True)

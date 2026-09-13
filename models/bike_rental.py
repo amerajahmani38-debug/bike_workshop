@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
+from datetime import date
 
 class BikeRental(models.Model):
     _name = 'bike.rental'
@@ -22,7 +23,8 @@ class BikeRental(models.Model):
     state = fields.Selection([
         ('draft', 'Draft'),
         ('confirmed', 'Confirmed'),
-        ('returned', 'Returned')
+        ('returned', 'Returned'),
+        ('cancelled', 'Cancelled')
     ], string='Status', default='draft', tracking=True, required=True)
 
     @api.model_create_multi
@@ -36,26 +38,36 @@ class BikeRental(models.Model):
     def _compute_rental_duration(self):
         for record in self:
             if record.start_date and record.expected_return_date:
-                if record.expected_return_date < record.start_date:
-                    raise ValidationError("Expected return date must be strictly after the rental start date.")
                 delta = record.expected_return_date - record.start_date
-                duration = delta.days + 1
-                if duration <= 0:
-                    raise ValidationError("Rental duration must be greater than zero.")
-                record.rental_duration = duration
+                duration = delta.days
+                record.rental_duration = duration if duration > 0 else 0
             else:
                 record.rental_duration = 0
 
     @api.depends('rental_duration', 'daily_rental_price')
     def _compute_total_amount(self):
         for record in self:
+            record.total_amount = record.rental_duration * record.daily_rental_price
+
+    @api.constrains('start_date', 'expected_return_date')
+    def _check_rental_dates(self):
+        for record in self:
+            if record.start_date and record.expected_return_date:
+                if record.expected_return_date <= record.start_date:
+                    raise ValidationError("Expected return date must be strictly after the rental start date.")
+                delta = record.expected_return_date - record.start_date
+                if delta.days <= 0:
+                    raise ValidationError("Rental duration must be greater than zero.")
+
+    @api.constrains('daily_rental_price')
+    def _check_daily_rental_price(self):
+        for record in self:
             if record.daily_rental_price < 0:
                 raise ValidationError("Daily rental price must not be negative.")
-            record.total_amount = record.rental_duration * record.daily_rental_price
 
     @api.onchange('start_date', 'expected_return_date')
     def _onchange_dates(self):
-        if self.start_date and self.expected_return_date and self.expected_return_date < self.start_date:
+        if self.start_date and self.expected_return_date and self.expected_return_date <= self.start_date:
             return {
                 'warning': {
                     'title': 'Invalid Dates',
@@ -98,15 +110,20 @@ class BikeRental(models.Model):
         for record in self:
             if record.state != 'draft':
                 raise UserError("Only a Draft Rental can be confirmed.")
-            # استدعاء صريح للتحقق أو الاعتماد على الـ constrains
             record._check_rental_conflicts()
             record.state = 'confirmed'
 
     def action_return(self):
         for record in self:
             if record.state != 'confirmed':
-                raise UserError("Only a Confirmed Rental can be returned.")
+                raise UserError("Only A Confirmed Rental can be returned.")
             record.write({
                 'state': 'returned',
                 'actual_return_date': fields.Date.today()
             })
+
+    def action_cancel(self):
+        for record in self:
+            if record.state == 'returned':
+                raise UserError("Returned rentals cannot be cancelled.")
+            record.state = 'cancelled'
