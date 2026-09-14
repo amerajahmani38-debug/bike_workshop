@@ -14,11 +14,10 @@
                 <filter string="Confirmed" name="filter_confirmed" domain="[('state', '=', 'confirmed')]"/>
                 <filter string="Returned" name="filter_returned" domain="[('state', '=', 'returned')]"/>
                 <filter string="Cancelled" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
-                <group expand="0" string="Group By">
-                    <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
-                    <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
-                    <filter string="Bike" name="group_by_bike" context="{'group_by': 'bike_id'}"/>
-                </group>
+                <separator/>
+                <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
+                <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
+                <filter string="Bike" name="group_by_bike" context="{'group_by': 'bike_id'}"/>
             </search>
         </field>
     </record>
