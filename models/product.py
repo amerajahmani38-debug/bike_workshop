@@ -6,5 +6,6 @@ class ProductTemplate(models.Model):
     is_spare_part = fields.Boolean(
         string='Is Spare Part', 
         default=False,
+        tracking=True,
         help="Check this box if this product can be used as a spare part in bike repairs."
     )

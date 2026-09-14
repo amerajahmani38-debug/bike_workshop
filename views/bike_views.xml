@@ -27,8 +27,6 @@
                         <group>
                             <field name="daily_rental_price"/>
                             <field name="last_maintenance_date"/>
-                            <field name="mechanic_id"/>
-                            <field name="service_notes"/>
                         </group>
                     </group>
                 </sheet>
