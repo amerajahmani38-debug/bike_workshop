@@ -84,10 +84,15 @@ class BikeRental(models.Model):
     def _check_rental_conflicts(self):
         for record in self:
             if record.state == 'confirmed':
+                # التأكد من استخدام الـ id الرقمي حصرياً لتجنب مشاكل NewId
+                bike_id = record.bike_id.id
+                if not bike_id:
+                    continue
+
                 # 1. منع التأكيد إذا كانت الدراجة تحت الصيانة
                 ongoing_repair = self.env['bike.repair'].search([
                     ('bike_source', '=', 'workshop'),
-                    ('workshop_bike_id', '=', record.bike_id.id),
+                    ('workshop_bike_id', '=', bike_id),
                     ('state', '=', 'in_progress')
                 ], limit=1)
                 
@@ -96,7 +101,7 @@ class BikeRental(models.Model):
 
                 # 2. منع تعارض الحجوزات المتداخلة
                 domain = [
-                    ('bike_id', '=', record.bike_id.id),
+                    ('bike_id', '=', bike_id),
                     ('state', '=', 'confirmed'),
                     ('id', '!=', record.id),
                     ('start_date', '<=', record.expected_return_date),
