@@ -13,3 +13,4 @@
     'application': True,
     'auto_install': False,
 }
+# exercise 3 ready
