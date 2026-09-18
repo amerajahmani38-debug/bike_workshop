@@ -14,4 +14,18 @@
             <field name="group_ids" eval="[(4, ref('group_bike_workshop_user'))]"/>
         </record>
     </data>
+
+    <!-- 3. Record Rule for Portal Users to view only their own rentals (Fixes Issue #6) -->
+    <data noupdate="1">
+        <record id="bike_rental_portal_rule" model="ir.rule">
+            <field name="name">Portal Users: See own rentals only</field>
+            <field name="model_id" ref="model_bike_rental"/>
+            <field name="domain_force">[('customer_id', '=', user.partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
 </odoo>
