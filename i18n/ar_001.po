@@ -1,0 +1,284 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* bike_workshop_task
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ar_001\n"
+
+# ==========================================
+# 1. ترجمة واجهات وقوائم الصيانات (Repairs)
+# ==========================================
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Search Repairs"
+msgstr "بحث في الصيانات"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "In Progress"
+msgstr "قيد التنفيذ"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Completed"
+msgstr "مكتمل"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Cancelled"
+msgstr "ملغي"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Status"
+msgstr "الحالة"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Customer"
+msgstr "العميل"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Bike Source"
+msgstr "مصدر الدراجة"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_search
+msgid "Mechanic"
+msgstr "الميكانيكي"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_kanban
+msgid "Customer:"
+msgstr "العميل:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_kanban
+msgid "Mechanic:"
+msgstr "الميكانيكي:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_kanban
+msgid "Source:"
+msgstr "المصدر:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_form
+msgid "Repair Job"
+msgstr "أمر صيانة"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_form
+msgid "Start Repair"
+msgstr "بدء الإصلاح"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_form
+msgid "Complete"
+msgstr "إكمال"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_form
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_rental_form
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_form
+msgid "Spare Parts"
+msgstr "قطع الغيار"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_bike_repair_tree
+#: model:ir.actions.act_window,name:bike_workshop_task.action_bike_repair
+msgid "Repair Jobs"
+msgstr "أعمال الصيانة"
+
+#. module: bike_workshop_task
+#: model:ir.actions.act_window,name:bike_workshop_task.action_bike_workshop_bike
+#: model:ir.ui.menu,name:bike_workshop_task.menu_bike_workshop_bikes
+msgid "Bikes"
+msgstr "الدراجات"
+
+#. module: bike_workshop_task
+#: model:ir.ui.menu,name:bike_workshop_task.menu_bike_workshop_root
+msgid "Bike Workshop"
+msgstr "ورشة الدراجات"
+
+#. module: bike_workshop_task
+#: model:ir.ui.menu,name:bike_workshop_task.menu_bike_repair_root
+msgid "Repairs"
+msgstr "الصيانة"
+
+#. module: bike_workshop_task
+#: model:ir.ui.menu,name:bike_workshop_task.menu_bike_repair_all
+msgid "All Repairs"
+msgstr "جميع الصيانات"
+
+
+# ==========================================
+# 2. ترجمة واجهات ونماذج شركاء العملاء (Partners)
+# ==========================================
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.view_partner_form_inherit_bike
+msgid "Preferred Bike Type"
+msgstr "نوع الدراجة المفضل"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_res_partner__preferred_bike_type
+#: model:ir.model.fields,field_description:bike_workshop_task.field_res_users__preferred_bike_type
+msgid "Preferred Bike Type"
+msgstr "نوع الدراجة المفضل"
+
+
+# ==========================================
+# 3. ترجمة تقارير عقود الإيجار (QWeb Reports)
+# ==========================================
+
+#. module: bike_workshop_task
+#: model:ir.actions.report,name:bike_workshop_task.action_report_bike_rental
+msgid "Rental Agreement"
+msgstr "عقد الإيجار"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Bike Workshop"
+msgstr "ورشة الدراجات"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Rental Agreement"
+msgstr "عقد الإيجار"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Rental Reference:"
+msgstr "مرجع الإيجار:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Status:"
+msgstr "الحالة:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Customer:"
+msgstr "العميل:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Rented Bike:"
+msgstr "الدراجة المؤجرة:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Start Date:"
+msgstr "تاريخ البدء:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Expected Return:"
+msgstr "الإرجاع المتوقع:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Actual Return Date:"
+msgstr "تاريخ الإرجاع الفعلي:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Description"
+msgstr "الوصف"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Duration"
+msgstr "المدة"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Daily Price"
+msgstr "السعر اليومي"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Total Amount"
+msgstr "المبلغ الإجمالي"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Rental of Bike:"
+msgstr "إيجار دراجة:"
+
+#. module: bike_workshop_task
+#: model:ir.ui.view,name:bike_workshop_task.report_bike_rental_document
+msgid "Total Rental Amount:"
+msgstr "إجمالي مبلغ الإيجار:"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair__customer_id
+msgid "Customer"
+msgstr "العميل"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair__mechanic_id
+msgid "Mechanic"
+msgstr "الميكانيكي"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair__bike_source
+msgid "Bike Source"
+msgstr "مصدر الدراجة"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair__workshop_bike_id
+msgid "Workshop Bike"
+msgstr "دراجة الورشة"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair__reported_issue
+msgid "Reported Issue"
+msgstr "المشكلة المُبلغ عنها"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair__service_notes
+msgid "Service Notes"
+msgstr "ملاحظات الخدمة"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair_line__product_id
+msgid "Product"
+msgstr "المنتج"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair_line__name
+msgid "Description"
+msgstr "الوصف"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair_line__quantity
+msgid "Quantity"
+msgstr "الكمية"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair_line__unit_price
+msgid "Unit Price"
+msgstr "سعر الوحدة"
+
+#. module: bike_workshop_task
+#: model:ir.model.fields,field_description:bike_workshop_task.field_bike_repair_line__subtotal
+msgid "Subtotal"
+msgstr "المجموع الفرعي"

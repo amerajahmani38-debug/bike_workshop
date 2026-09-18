@@ -5,7 +5,7 @@ from datetime import date
 class BikeRental(models.Model):
     _name = 'bike.rental'
     _description = 'Bike Rental Management'
-    _inherit = ['mail.thread']  # لدعم التتبع وتجنب تحذيرات السيرفر
+    _inherit = ['mail.thread']
     _rec_name = 'reference'
 
     reference = fields.Char(string='Rental Reference', required=True, copy=False, readonly=True, default=lambda self: 'New')
@@ -26,6 +26,24 @@ class BikeRental(models.Model):
         ('returned', 'Returned'),
         ('cancelled', 'Cancelled')
     ], string='Status', default='draft', tracking=True, required=True)
+
+    return_performance = fields.Selection([
+        ('on_time', 'On Time'),
+        ('late', 'Late'),
+        ('pending', 'Pending')
+    ], string='Return Performance', compute='_compute_return_performance', store=True)
+
+    @api.depends('state', 'actual_return_date', 'expected_return_date')
+    def _compute_return_performance(self):
+        for record in self:
+            if record.state in ('draft', 'cancelled'):
+                record.return_performance = False
+            elif not record.actual_return_date:
+                record.return_performance = 'pending'
+            elif record.actual_return_date <= record.expected_return_date:
+                record.return_performance = 'on_time'
+            else:
+                record.return_performance = 'late'
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -84,12 +102,10 @@ class BikeRental(models.Model):
     def _check_rental_conflicts(self):
         for record in self:
             if record.state == 'confirmed':
-                # التأكد من استخدام الـ id الرقمي حصرياً لتجنب مشاكل NewId
                 bike_id = record.bike_id.id
                 if not bike_id:
                     continue
 
-                # 1. منع التأكيد إذا كانت الدراجة تحت الصيانة
                 ongoing_repair = self.env['bike.repair'].search([
                     ('bike_source', '=', 'workshop'),
                     ('workshop_bike_id', '=', bike_id),
@@ -99,7 +115,6 @@ class BikeRental(models.Model):
                 if ongoing_repair:
                     raise ValidationError(f"Cannot confirm rental! The bike '{record.bike_id.name}' is currently under repair.")
 
-                # 2. منع تعارض الحجوزات المتداخلة
                 domain = [
                     ('bike_id', '=', bike_id),
                     ('state', '=', 'confirmed'),
@@ -134,4 +149,4 @@ class BikeRental(models.Model):
             record.state = 'cancelled'
 
     def action_print_rental_agreement(self):
-     return self.env.ref('bike_workshop_task.action_report_bike_rental').report_action(self)
+        return self.env.ref('bike_workshop_task.action_report_bike_rental').report_action(self)

@@ -7,7 +7,7 @@
     'data': [
         'security/bike_workshop_security.xml',
         'security/ir.model.access.csv',
-        'views/bike_views.xml',          # تم نقله هنا ليتم تحميله أولاً وتعريف القائمة الرئيسية
+        'views/bike_views.xml',
         'views/product_views.xml',
         'data/rental_sequence.xml',
         'data/repair_sequence.xml',
@@ -16,7 +16,9 @@
         'views/res_partner_views.xml',
         'reports/rental_agreement_report.xml',
         'views/portal_templates.xml',
+        'views/rental_report_views.xml',
     ],
+    'images': ['static/description/icon.png'],
     'installable': True,
     'application': True,
     'auto_install': False,

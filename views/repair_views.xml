@@ -6,11 +6,11 @@
         <field name="model">bike.repair</field>
         <field name="arch" type="xml">
             <search string="Search Repairs">
-                <field name="name"/>
-                <field name="customer_id"/>
-                <field name="workshop_bike_id"/>
-                <field name="mechanic_id"/>
-                <field name="state"/>
+                <field name="name" string="Reference"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="workshop_bike_id" string="Workshop Bike"/>
+                <field name="mechanic_id" string="Mechanic"/>
+                <field name="state" string="Status"/>
                 <separator/>
                 <!-- Status Filters -->
                 <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
@@ -81,36 +81,36 @@
                     </div>
                     <group>
                         <group>
-                            <field name="customer_id" options="{'no_create': True}"/>
-                            <field name="bike_source" widget="radio"/>
-                            <field name="workshop_bike_id" invisible="bike_source != 'workshop'" required="bike_source == 'workshop'"/>
-                            <field name="external_bike_name" invisible="bike_source != 'external'" required="bike_source == 'external'"/>
-                            <field name="external_bike_brand" invisible="bike_source != 'external'"/>
-                            <field name="external_bike_type" invisible="bike_source != 'external'"/>
+                            <field name="customer_id" string="Customer" options="{'no_create': True}"/>
+                            <field name="bike_source" string="Bike Source" widget="radio"/>
+                            <field name="workshop_bike_id" string="Workshop Bike" invisible="bike_source != 'workshop'" required="bike_source == 'workshop'"/>
+                            <field name="external_bike_name" string="External Bike Name" invisible="bike_source != 'external'" required="bike_source == 'external'"/>
+                            <field name="external_bike_brand" string="External Bike Brand" invisible="bike_source != 'external'"/>
+                            <field name="external_bike_type" string="External Bike Type" invisible="bike_source != 'external'"/>
                         </group>
                         <group>
-                            <field name="mechanic_id"/>
-                            <field name="last_service_date"/>
+                            <field name="mechanic_id" string="Mechanic"/>
+                            <field name="last_service_date" string="Last Service Date"/>
                             <field name="company_currency_id" invisible="1"/>
                         </group>
                     </group>
                     <group>
-                        <field name="reported_issue"/>
-                        <field name="service_notes"/>
+                        <field name="reported_issue" string="Reported Issue"/>
+                        <field name="service_notes" string="Service Notes"/>
                     </group>
                     <notebook>
                         <page string="Spare Parts">
                             <field name="repair_line_ids">
                                 <list editable="bottom">
-                                    <field name="product_id" options="{'quick_create': False}"/>
-                                    <field name="name"/>
-                                    <field name="quantity"/>
-                                    <field name="unit_price"/>
-                                    <field name="subtotal"/>
+                                    <field name="product_id" string="Product" options="{'quick_create': False}"/>
+                                    <field name="name" string="Description"/>
+                                    <field name="quantity" string="Quantity"/>
+                                    <field name="unit_price" string="Unit Price"/>
+                                    <field name="subtotal" string="Subtotal"/>
                                 </list>
                             </field>
                             <group class="oe_subtotal_footer oe_right">
-                                <field name="total_parts_cost" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
+                                <field name="total_parts_cost" string="Total Parts Cost" widget="monetary" options="{'currency_field': 'company_currency_id'}"/>
                             </group>
                         </page>
                     </notebook>
@@ -125,13 +125,13 @@
         <field name="model">bike.repair</field>
         <field name="arch" type="xml">
             <list string="Repair Jobs" decoration-info="state == 'draft'" decoration-warning="state == 'in_progress'" decoration-success="state == 'completed'" decoration-danger="state == 'cancelled'">
-                <field name="name"/>
-                <field name="customer_id"/>
-                <field name="bike_source"/>
-                <field name="mechanic_id"/>
-                <field name="last_service_date"/>
-                <field name="total_parts_cost"/>
-                <field name="state" widget="badge"/>
+                <field name="name" string="Reference"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="bike_source" string="Bike Source"/>
+                <field name="mechanic_id" string="Mechanic"/>
+                <field name="last_service_date" string="Last Service Date"/>
+                <field name="total_parts_cost" string="Total Parts Cost"/>
+                <field name="state" string="Status" widget="badge"/>
             </list>
         </field>
     </record>
