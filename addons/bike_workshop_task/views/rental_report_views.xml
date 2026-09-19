@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View for Rental Analysis Report -->
+    <record id="view_bike_rental_report_tree" model="ir.ui.view">
+        <field name="name">bike.rental.report.list</field>
+        <field name="model">bike.rental.report</field>
+        <field name="arch" type="xml">
+            <list string="Rental Analysis" create="false" edit="false" delete="false">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="bike_id"/>
+                <field name="bike_type"/>
+                <field name="start_date"/>
+                <field name="expected_return_date"/>
+                <field name="actual_return_date"/>
+                <field name="rental_duration" sum="Total Duration"/>
+                <field name="state"/>
+                <field name="return_performance"/>
+                <field name="total_amount" sum="Total Revenue" widget="monetary"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Pivot View for Rental Analysis -->
+    <record id="view_bike_rental_report_pivot" model="ir.ui.view">
+        <field name="name">bike.rental.report.pivot</field>
+        <field name="model">bike.rental.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Rental Analysis">
+                <field name="customer_id" type="row"/>
+                <field name="bike_type" type="col"/>
+                <field name="total_amount" type="measure"/>
+                <field name="rental_duration" type="measure"/>
+                <field name="rental_count" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Graph View for Rental Analysis -->
+    <record id="view_bike_rental_report_graph" model="ir.ui.view">
+        <field name="name">bike.rental.report.graph</field>
+        <field name="model">bike.rental.report</field>
+        <field name="arch" type="xml">
+            <graph string="Rental Analysis" type="bar">
+                <field name="bike_type"/>
+                <field name="total_amount" type="measure"/>
+                <field name="rental_duration" type="measure"/>
+                <field name="rental_count" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Validated Search View for Odoo 19 -->
+    <record id="view_bike_rental_report_search" model="ir.ui.view">
+        <field name="name">bike.rental.report.search</field>
+        <field name="model">bike.rental.report</field>
+        <field name="arch" type="xml">
+            <search string="Rental Analysis">
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Returned" name="returned" domain="[('state', '=', 'returned')]"/>
+                <separator/>
+                <filter string="On Time" name="on_time" domain="[('return_performance', '=', 'on_time')]"/>
+                <filter string="Late Returns" name="late" domain="[('return_performance', '=', 'late')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action for Rental Analysis Report (Supports List, Pivot, Graph) -->
+    <record id="action_bike_rental_report" model="ir.actions.act_window">
+        <field name="name">Rental Analysis</field>
+        <field name="res_model">bike.rental.report</field>
+        <field name="view_mode">list,pivot,graph</field>
+        <field name="search_view_id" ref="view_bike_rental_report_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No rental analysis data found!
+            </p>
+            <p>
+                Analytic reports will automatically populate as rentals are confirmed and processed.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Item for Report under Rentals -->
+    <menuitem id="menu_bike_rental_report"
+              name="Rental Analysis"
+              parent="menu_bike_rental_root"
+              action="action_bike_rental_report"
+              sequence="20"/>
+</odoo>
