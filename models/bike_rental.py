@@ -8,6 +8,13 @@ class BikeRental(models.Model):
     _inherit = ['mail.thread']  # لدعم التتبع وتجنب تحذيرات السيرفر
     _rec_name = 'reference'
 
+     company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        required=True,
+        default=lambda self: self.env.company
+    )
+
     reference = fields.Char(string='Rental Reference', required=True, copy=False, readonly=True, default=lambda self: 'New')
     customer_id = fields.Many2one('res.partner', string='Customer', required=True)
     bike_id = fields.Many2one('bike.workshop.bike', string='Rented Bike', required=True)
