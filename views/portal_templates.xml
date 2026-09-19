@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- 1. قائمة الإيجارات (List View) -->
+    <template id="portal_my_rentals_list" name="My Rentals">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Rentals</t>
+            </t>
+
+            <t t-if="not rentals">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no rentals found for your account.
+                </div>
+            </t>
+
+            <t t-if="rentals">
+                <div class="table-responsive">
+                    <table class="table table-hover o_portal_my_table">
+                        <thead>
+                            <tr class="active">
+                                <th>Reference</th>
+                                <th>Bike</th>
+                                <th class="text-center">Start Date</th>
+                                <th class="text-center">Expected Return</th>
+                                <th class="text-center">Status</th>
+                                <th class="text-end">Total Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="rentals" t-as="rental">
+                                <td>
+                                    <a t-att-href="'/my/rentals/%s' % rental.id">
+                                        <t t-esc="rental.reference"/>
+                                    </a>
+                                </td>
+                                <td><t t-esc="rental.bike_id.name"/></td>
+                                <td class="text-center"><span t-field="rental.start_date"/></td>
+                                <td class="text-center"><span t-field="rental.expected_return_date"/></td>
+                                <td class="text-center">
+                                    <span class="badge rounded-pill text-bg-info" t-esc="rental.state"/>
+                                </td>
+                                <td class="text-end"><span t-field="rental.total_amount"/> JD</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="o_portal_pager text-center">
+                    <t t-call="portal.pager"/>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- 2. تفاصيل الإيجار (Detail View) مع زر طباعة الـ PDF -->
+    <template id="portal_my_rental_detail" name="Rental Details">
+        <t t-call="portal.portal_layout">
+            <div id="wrap" class="container">
+                <div class="mb-3">
+                    <a href="/my/rentals" class="btn btn-secondary btn-sm">
+                        <i class="fa fa-arrow-left me-1"/> Back to Rentals
+                    </a>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header bg-light">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3>Rental Agreement: <span t-esc="rental.reference"/></h3>
+                            </div>
+                            <div class="col text-end">
+                                <!-- زر طباعة التقرير PDF -->
+                                <a t-att-href="'/report/pdf/bike_workshop_task.report_bike_rental_document/%s' % rental.id" 
+                                   class="btn btn-primary btn-sm me-2" 
+                                   target="_blank">
+                                    <i class="fa fa-print me-1"/> Print PDF
+                                </a>
+                                <span class="badge rounded-pill text-bg-primary fs-6" t-esc="rental.state"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>Rented Bike:</strong> <span t-esc="rental.bike_id.name"/></p>
+                                <p><strong>Daily Price:</strong> <span t-esc="rental.daily_rental_price"/> JD</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Start Date:</strong> <span t-field="rental.start_date"/></p>
+                                <p><strong>Expected Return:</strong> <span t-field="rental.expected_return_date"/></p>
+                                <t t-if="rental.actual_return_date">
+                                    <p><strong>Actual Return Date:</strong> <span t-field="rental.actual_return_date"/></p>
+                                </t>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Rental Duration:</strong> <span t-esc="rental.rental_duration"/> days</p>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <h4><strong>Total Amount: <span t-esc="rental.total_amount"/> JD</strong></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
