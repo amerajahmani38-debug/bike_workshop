@@ -15,7 +15,7 @@
                 <filter string="Returned" name="filter_returned" domain="[('state', '=', 'returned')]"/>
                 <filter string="Cancelled" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
                 <separator/>
-                <group>
+                <group expand="0" string="Group By">
                     <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
                     <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
                     <filter string="Bike" name="group_by_bike" context="{'group_by': 'bike_id'}"/>
@@ -64,7 +64,7 @@
         <field name="arch" type="xml">
             <graph string="Rentals Analysis" type="bar">
                 <field name="start_date" interval="month"/>
-                <field name="total_amount" type="measure"/>
+                <field name="total_amount" type="measure" operator="sum"/>
             </graph>
         </field>
     </record>
@@ -77,7 +77,7 @@
             <pivot string="Rentals Analysis">
                 <field name="customer_id" type="row"/>
                 <field name="state" type="col"/>
-                <field name="total_amount" type="measure"/>
+                <field name="total_amount" type="measure" operator="sum"/>
             </pivot>
         </field>
     </record>
