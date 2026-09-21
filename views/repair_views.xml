@@ -19,7 +19,7 @@
                 <filter string="Cancelled" name="filter_cancelled" domain="[('state', '=', 'cancelled')]"/>
                 <separator/>
                 <!-- Group By Options -->
-                <group>
+                <group expand="0" string="Group By">
                     <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>
                     <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer_id'}"/>
                     <filter string="Bike Source" name="group_by_bike_source" context="{'group_by': 'bike_source'}"/>
