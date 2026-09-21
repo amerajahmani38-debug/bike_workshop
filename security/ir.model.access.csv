@@ -1,8 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_bike_workshop_bike,access_bike_workshop_bike,model_bike_workshop_bike,group_bike_workshop_user,1,1,1,1
-access_bike_rental,access_bike_rental,model_bike_rental,group_bike_workshop_user,1,1,1,1
+access_bike_workshop_bike,access_bike_workshop_bike,model_bike_workshop_bike,,1,1,1,1
+access_bike_rental,access_bike_rental,model_bike_rental,,1,1,1,1
 access_bike_rental_portal,access_bike_rental_portal,model_bike_rental,base.group_portal,1,0,0,0
-access_bike_repair,access_bike_repair,model_bike_repair,group_bike_workshop_user,1,1,1,1
-access_bike_repair_line,access_bike_repair_line,model_bike_repair_line,group_bike_workshop_user,1,1,1,1
-access_bike_dashboard,access_bike_dashboard,model_bike_dashboard,group_bike_workshop_user,1,1,1,1
-access_bike_rental_report,access_bike_rental_report,model_bike_rental_report,group_bike_workshop_user,1,0,0,0
+access_bike_repair,access_bike_repair,model_bike_repair,,1,1,1,1
+access_bike_repair_line,access_bike_repair_line,model_bike_repair_line,,1,1,1,1
+access_bike_dashboard,access_bike_dashboard,model_bike_dashboard,,1,1,1,1
