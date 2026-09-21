@@ -1,3 +1,4 @@
+cat > /home/user/bike_workshop_task/views/dashboard_views.xml << 'EOF'
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_bike_dashboard_form" model="ir.ui.view">
@@ -23,15 +24,18 @@
             </form>
         </field>
     </record>
-    <record id="action_bike_workshop_dashboard" model="ir.actions.act_window">
+
+    <record id="action_bike_workshop_dashboard_window" model="ir.actions.act_window">
         <field name="name">Dashboard</field>
         <field name="res_model">bike.dashboard</field>
         <field name="view_mode">form</field>
         <field name="target">current</field>
     </record>
+
     <menuitem id="menu_bike_workshop_dashboard"
               name="Dashboard"
-              action="action_bike_workshop_dashboard"
+              action="action_bike_workshop_dashboard_window"
               parent="menu_bike_workshop_root"
               sequence="1"/>
 </odoo>
+EOF
