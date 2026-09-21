@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="action_report_bike_rental" model="ir.actions.report">
-        <field name="name">Rental Agreement</field>
-        <field name="model">bike.rental</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">bike_workshop_task.report_bike_rental_document</field>
-        <field name="report_file">bike_workshop_task.report_bike_rental_document</field>
-        <field name="print_report_name">'Rental Agreement - %s' % (object.reference)</field>
-        <field name="binding_model_id" ref="model_bike_rental"/>
-        <field name="binding_type">report</field>
-    </record>
-
     <template id="report_bike_rental_document">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="doc">
@@ -60,6 +49,7 @@
                         <div style="margin-top: 30px; text-align: right; border-top: 1px solid #ddd; padding-top: 15px;">
                             <h3 style="margin: 0;"><strong>Total Rental Amount: <span t-esc="doc.total_amount"/> JD</strong></h3>
                         </div>
+
                     </div>
                 </t>
             </t>
