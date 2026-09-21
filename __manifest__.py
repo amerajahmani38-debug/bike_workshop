@@ -18,6 +18,7 @@
         'views/portal_templates.xml',
         'views/rental_report_views.xml',
         'views/dashboard_views.xml',
+        'i18n/ar.po',
     ],
     'images': ['static/description/icon.png'],
     'installable': True,
