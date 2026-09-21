@@ -1,27 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Form View -->
-    <record id="view_bike_form" model="ir.ui.view">
+    <!-- Bike Search View -->
+    <record id="view_bike_workshop_bike_search" model="ir.ui.view">
+        <field name="name">bike.workshop.bike.search</field>
+        <field name="model">bike.workshop.bike</field>
+        <field name="arch" type="xml">
+            <search string="Search Bikes">
+                <field name="name"/>
+                <field name="brand"/>
+                <field name="bike_type"/>
+                <field name="mechanic_id"/>
+                <separator/>
+                <filter string="Road" name="filter_road" domain="[('bike_type', '=', 'road')]"/>
+                <filter string="Mountain" name="filter_mountain" domain="[('bike_type', '=', 'mountain')]"/>
+                <filter string="City" name="filter_city" domain="[('bike_type', '=', 'city')]"/>
+                <filter string="Electric" name="filter_electric" domain="[('bike_type', '=', 'electric')]"/>
+                <separator/>
+                <group>
+                    <filter string="Bike Type" name="group_by_bike_type" context="{'group_by': 'bike_type'}"/>
+                    <filter string="Brand" name="group_by_brand" context="{'group_by': 'brand'}"/>
+                    <filter string="Mechanic" name="group_by_mechanic" context="{'group_by': 'mechanic_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Bike Form View -->
+    <record id="view_bike_workshop_bike_form" model="ir.ui.view">
         <field name="name">bike.workshop.bike.form</field>
         <field name="model">bike.workshop.bike</field>
         <field name="arch" type="xml">
             <form string="Bike">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_rentals" type="object" class="oe_stat_button" icon="fa-bicycle">
+                            <field name="rental_count" widget="statinfo" string="Rentals"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1>
-                            <field name="name" placeholder="e.g. Mountain Bike 01"/>
+                            <field name="name" placeholder="e.g. Bike-001"/>
                         </h1>
                     </div>
                     <group>
-                        <group>
+                        <group string="Bike Information">
                             <field name="brand"/>
                             <field name="bike_type"/>
                             <field name="wheel_size"/>
+                            <field name="daily_rental_price"/>
+                        </group>
+                        <group string="Dates">
                             <field name="purchase_date"/>
+                            <field name="last_maintenance_date"/>
+                        </group>
+                    </group>
+                    <group string="Service Information">
+                        <group>
+                            <field name="mechanic_id"/>
+                            <field name="last_service_date"/>
                         </group>
                         <group>
-                            <field name="daily_rental_price"/>
-                            <field name="last_maintenance_date"/>
+                            <field name="service_notes"/>
                         </group>
                     </group>
                 </sheet>
@@ -29,9 +68,9 @@
         </field>
     </record>
 
-    <!-- List View -->
-    <record id="view_bike_tree" model="ir.ui.view">
-        <field name="name">bike.workshop.bike.tree</field>
+    <!-- Bike List View -->
+    <record id="view_bike_workshop_bike_tree" model="ir.ui.view">
+        <field name="name">bike.workshop.bike.list</field>
         <field name="model">bike.workshop.bike</field>
         <field name="arch" type="xml">
             <list string="Bikes">
@@ -39,31 +78,34 @@
                 <field name="brand"/>
                 <field name="bike_type"/>
                 <field name="daily_rental_price"/>
-                <field name="purchase_date"/>
-                <field name="last_maintenance_date"/>
-                <field name="wheel_size"/>
+                <field name="mechanic_id"/>
+                <field name="last_service_date"/>
+                <field name="rental_count"/>
             </list>
         </field>
     </record>
 
-    <!-- Action -->
-    <record id="action_bike_workshop" model="ir.actions.act_window">
+    <!-- Actions for Bikes -->
+    <record id="action_bike_workshop_bike" model="ir.actions.act_window">
         <field name="name">Bikes</field>
         <field name="res_model">bike.workshop.bike</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_bike_workshop_bike_search"/>
     </record>
 
     <!-- Menus -->
-
-   <menuitem id="menu_bike_workshop_root"
-             name="Bike Workshop"
-             groups="bike_workshop.group_bike_workshop_user,base.group_system"/>
-    
-    <menuitem id="menu_bike_management" 
-              name="Bikes" 
-              parent="menu_bike_workshop_root" 
-              action="action_bike_workshop" 
+    <menuitem id="menu_bike_workshop_root" 
+              name="Bike Workshop" 
               sequence="10"/>
 
-    
+    <menuitem id="menu_bike_workshop_bikes" 
+              name="Bikes" 
+              parent="menu_bike_workshop_root" 
+              action="action_bike_workshop_bike" 
+              sequence="20"/>
+
+    <menuitem id="menu_bike_repair_root" 
+              name="Repairs" 
+              parent="menu_bike_workshop_root" 
+              sequence="30"/>
 </odoo>
