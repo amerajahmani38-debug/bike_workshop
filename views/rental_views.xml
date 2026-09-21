@@ -177,56 +177,9 @@
         <field name="name">Rental Agreement</field>
         <field name="model">bike.rental</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">bike_workshop_task.report_bike_rental_document</field>
-        <field name="report_file">bike_workshop_task.report_bike_rental_document</field>
+        <field name="report_name">bike_workshop.report_bike_rental_document</field>
+        <field name="report_file">bike_workshop.report_bike_rental_document</field>
         <field name="binding_model_id" ref="model_bike_rental"/>
         <field name="binding_type">report</field>
     </record>
-
-    <!-- Dashboard Actions & Menus -->
-    <record id="action_dashboard_active_rentals" model="ir.actions.act_window">
-        <field name="name">Active Rentals Today</field>
-        <field name="res_model">bike.rental</field>
-        <field name="view_mode">kanban,list,form,graph,pivot</field>
-        <field name="domain">[('state', '=', 'confirmed'), ('start_date', '&lt;=', context_today().strftime('%Y-%m-%d')), ('expected_return_date', '&gt;=', context_today().strftime('%Y-%m-%d'))]</field>
-        <field name="search_view_id" ref="view_bike_rental_search"/>
-    </record>
-
-    <record id="action_dashboard_returns_due" model="ir.actions.act_window">
-        <field name="name">Returns Due Today</field>
-        <field name="res_model">bike.rental</field>
-        <field name="view_mode">kanban,list,form</field>
-        <field name="domain">[('state', '=', 'confirmed'), ('expected_return_date', '=', context_today().strftime('%Y-%m-%d'))]</field>
-        <field name="search_view_id" ref="view_bike_rental_search"/>
-    </record>
-
-    <record id="action_dashboard_repairs_in_progress" model="ir.actions.act_window">
-        <field name="name">Repairs In Progress</field>
-        <field name="res_model">bike.repair</field>
-        <field name="view_mode">kanban,list,form</field>
-        <field name="domain">[('state', '=', 'in_progress')]</field>
-    </record>
-
-    <menuitem id="menu_workshop_dashboard_root" 
-              name="Operations Dashboard" 
-              parent="menu_bike_workshop_root" 
-              sequence="10"/>
-
-    <menuitem id="menu_dashboard_active_rentals" 
-              name="Active Rentals Today" 
-              parent="menu_workshop_dashboard_root" 
-              action="action_dashboard_active_rentals" 
-              sequence="10"/>
-
-    <menuitem id="menu_dashboard_returns_due" 
-              name="Returns Due Today" 
-              parent="menu_workshop_dashboard_root" 
-              action="action_dashboard_returns_due" 
-              sequence="20"/>
-
-    <menuitem id="menu_dashboard_repairs_in_progress" 
-              name="Repairs In Progress" 
-              parent="menu_workshop_dashboard_root" 
-              action="action_dashboard_repairs_in_progress" 
-              sequence="30"/>
 </odoo>

@@ -7,6 +7,16 @@ class BikeRental(models.Model):
     _description = 'Bike Rental Management'
     _inherit = ['mail.thread']
     _rec_name = 'reference'
+    _sql_constraints = [
+        ('reference_uniq', 'unique(reference)', 'The Rental Reference must be unique! This reference already exists.'),
+    ]
+
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        required=True,
+        default=lambda self: self.env.company
+    )
 
     reference = fields.Char(string='Rental Reference', required=True, copy=False, readonly=True, default=lambda self: 'New')
     customer_id = fields.Many2one('res.partner', string='Customer', required=True)

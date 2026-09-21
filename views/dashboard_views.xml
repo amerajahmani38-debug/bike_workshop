@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_bike_dashboard_form" model="ir.ui.view">
+        <field name="name">bike.dashboard.form</field>
+        <field name="model">bike.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Workshop Operations Dashboard" create="false" delete="false">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_active_rentals" type="object" class="oe_stat_button" icon="fa-bicycle">
+                            <field name="active_rentals_count" widget="statinfo" string="Active Rentals Today"/>
+                        </button>
+                        <button name="action_open_returns_due" type="object" class="oe_stat_button" icon="fa-clock-o">
+                            <field name="returns_due_count" widget="statinfo" string="Returns Due Today"/>
+                        </button>
+                        <button name="action_open_repairs_in_progress" type="object" class="oe_stat_button" icon="fa-wrench">
+                            <field name="repairs_in_progress_count" widget="statinfo" string="Repairs In Progress"/>
+                        </button>
+                    </div>
+                    <h1>Workshop Operations Dashboard</h1>
+                    <p>Click any indicator above to view the matching records.</p>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_bike_workshop_dashboard" model="ir.actions.act_window">
+        <field name="name">Dashboard</field>
+        <field name="res_model">bike.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">current</field>
+    </record>
+    <menuitem id="menu_bike_workshop_dashboard"
+              name="Dashboard"
+              action="action_bike_workshop_dashboard"
+              parent="menu_bike_workshop_root"
+              sequence="1"/>
+</odoo>

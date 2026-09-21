@@ -17,6 +17,7 @@
         'reports/rental_agreement_report.xml',
         'views/portal_templates.xml',
         'views/rental_report_views.xml',
+        'views/dashboard_views.xml',
     ],
     'images': ['static/description/icon.png'],
     'installable': True,

@@ -13,7 +13,7 @@
                 <field name="start_date"/>
                 <field name="expected_return_date"/>
                 <field name="actual_return_date"/>
-                <field name="rental_duration" sum="Total Duration"/>
+                <field name="rental_duration" sum="Total Duration" avg="Average Duration"/>
                 <field name="state"/>
                 <field name="return_performance"/>
                 <field name="total_amount" sum="Total Revenue" widget="monetary"/>
@@ -30,7 +30,7 @@
                 <field name="customer_id" type="row"/>
                 <field name="bike_type" type="col"/>
                 <field name="total_amount" type="measure"/>
-                <field name="rental_duration" type="measure"/>
+                <field name="rental_duration" type="measure" string="Average Rental Duration"/>
                 <field name="rental_count" type="measure"/>
             </pivot>
         </field>
@@ -50,26 +50,32 @@
         </field>
     </record>
 
-    <!-- Validated Search View for Odoo 19 -->
+    <!-- Search View -->
     <record id="view_bike_rental_report_search" model="ir.ui.view">
         <field name="name">bike.rental.report.search</field>
         <field name="model">bike.rental.report</field>
         <field name="arch" type="xml">
             <search string="Rental Analysis">
+                <field name="bike_type"/>
+                <field name="start_date"/>
                 <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
                 <filter string="Returned" name="returned" domain="[('state', '=', 'returned')]"/>
                 <separator/>
                 <filter string="On Time" name="on_time" domain="[('return_performance', '=', 'on_time')]"/>
                 <filter string="Late Returns" name="late" domain="[('return_performance', '=', 'late')]"/>
+                <separator/>
+                <filter string="Bike Type" name="group_by_bike_type" context="{'group_by': 'bike_type'}"/>
+                <filter string="Start Date" name="group_by_start_date" context="{'group_by': 'start_date'}"/>
             </search>
         </field>
     </record>
 
-    <!-- Action for Rental Analysis Report (Supports List, Pivot, Graph) -->
+    <!-- Action for Rental Analysis Report (Excludes Cancelled by default) -->
     <record id="action_bike_rental_report" model="ir.actions.act_window">
         <field name="name">Rental Analysis</field>
         <field name="res_model">bike.rental.report</field>
         <field name="view_mode">list,pivot,graph</field>
+        <field name="domain">[('state', '!=', 'cancelled')]</field>
         <field name="search_view_id" ref="view_bike_rental_report_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
